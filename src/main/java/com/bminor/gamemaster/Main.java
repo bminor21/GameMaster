@@ -18,7 +18,7 @@ public class Main {
 			System.out.println( game );
 		}
 		
-		System.out.println( gameDao.getGames( 3 ) );
+		System.out.println( gameDao.getGame( 3 ) );
 		
 		( ( ClassPathXmlApplicationContext ) context).close();
 	}

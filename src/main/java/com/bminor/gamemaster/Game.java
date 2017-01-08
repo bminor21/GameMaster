@@ -6,6 +6,15 @@ public class Game {
 	private String title;
 	private String developer;
 	private String platform;
+	
+	public Game() {}
+
+	public Game(int id, String title, String developer, String platform) {
+		this.id = id;
+		this.title = title;
+		this.developer = developer;
+		this.platform = platform;
+	}
 
 	public int getId() {
 		return id;
