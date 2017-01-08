@@ -12,7 +12,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component("gameDAO")
 public class GameDAO {
@@ -60,12 +63,21 @@ public class GameDAO {
 	}
 	
 	/* Add a game to the database */
+	@Transactional
 	public boolean addGame( Game game ){
 		BeanPropertySqlParameterSource bean = new BeanPropertySqlParameterSource(game);
 		return ( jdbc.update("insert into games (title, developer, platform ) values (:title, :developer, :platform)", bean) == 1 );
 	}
 	
+	/* Add mutliple games */
+	@Transactional
+	public int [] addGames( List<Game> games ){
+		SqlParameterSource [] values = SqlParameterSourceUtils.createBatch( games.toArray() );
+		return jdbc.batchUpdate("insert into games (title, developer, platform ) values (:title, :developer, :platform)", values );
+	}
+	
 	/* Updates a game */
+	@Transactional
 	public boolean updateGame( Game game ){
 		BeanPropertySqlParameterSource bean = new BeanPropertySqlParameterSource(game);
 		return ( jdbc.update("update games set title = :title, developer = :developer, platform = :platform where id = :id", bean) == 1 );

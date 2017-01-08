@@ -1,5 +1,6 @@
 package com.bminor.gamemaster;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -17,8 +18,6 @@ public class Main {
 		for( Game game : games ){
 			System.out.println( game );
 		}
-		
-		System.out.println( gameDao.getGame( 3 ) );
 		
 		( ( ClassPathXmlApplicationContext ) context).close();
 	}
